@@ -9,8 +9,8 @@ def write_file(working_directory, file_path, content):
 
         dirname = os.path.dirname(full_file_path)
         if not os.path.exists(dirname):
-            # print(f'Directory {dirname} does not exist. Creating...')
-            os.makedirs(os.path.dirname(dirname))
+            print(f'Directory {dirname} does not exist. Creating...')
+            os.makedirs(dirname, exist_ok=True)
         
         with open(full_file_path, "w") as f:
             chars_written = f.write(content)
@@ -21,7 +21,7 @@ def write_file(working_directory, file_path, content):
 
 schema_write_file = types.FunctionDeclaration(
     name="write_file",
-    description="Creates the given directory and file if not already existing and within the working directory and writes the given content to the file.",
+    description="Creates the given directory and file if not already existing relative to the working directory. If the file already exists, overwrites the given content to the file.",
     parameters=types.Schema(
         type=types.Type.OBJECT,
         properties={
